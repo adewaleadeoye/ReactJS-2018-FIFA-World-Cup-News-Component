@@ -18,11 +18,15 @@ class NewsContainer extends Component {
   fetchFirst() {
     var that = this;
       fetch('http://fcnaija.com/world-cup-2018/news').then(function (response) {
-        return response.json();
+        if(response.ok) { 
+          return response.json();
+        }
       }).then(function (result) {
         //console.log(JSON.stringify(result));
         that.setState({ main_news: result.main_news});
         that.setState({ other_news: result.other_news});
+      }).catch(function(error) {
+        console.log('Problem with News fetch operation: ', error.message);
       });
 
   } 
@@ -30,10 +34,14 @@ class NewsContainer extends Component {
   handleNewsClick(news_id) {
     var that = this;
       fetch('http://fcnaija.com/world-cup-2018/news/'+news_id).then(function (response) {
-        return response.json();
+        if(response.ok) { 
+          return response.json();
+        }
       }).then(function (result) {
         that.setState({ news_detail: result.news_detail});
         that.setState({details: true})
+      }).catch(function(error) {
+        console.log('Problem with News fetch operation: ', error.message);
       });
   }
 
